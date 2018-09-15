@@ -1,0 +1,57 @@
+//Nicolas A. Dorado Soria.
+
+import camiones.*
+test "el peso del camion es 510" {
+	paqueteDeLadrillos.cantidadLadrillos(5)
+	camion.capacidadMaxima(550)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(knightRider)
+	assert.equals(510, camion.pesoTotal())
+}
+
+test "el camion no puede llevar a knightRider"{
+	assert.notThat(camion.puedeCargar(knightRider))
+	
+}
+
+test "el camion tiene cargado knightRider"{
+	camion.capacidadMaxima(550)
+	camion.cargar(knightRider)
+	assert.that(camion.tieneCargado(knightRider))
+}
+
+test "la carga mas peligro del camion es"{
+	camion.capacidadMaxima(550)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(knightRider)
+	assert.equals(knightRider,camion.cargaMasPeligrosa())
+}
+
+test "el camion puede ir por la ruta"{
+	camion.capacidadMaxima(550)
+	camion.cargar(knightRider)
+	assert.that(camion.saberSiPuedePorRuta())
+}
+
+test "la carga disponibles es de: 50"{
+	camion.capacidadMaxima(550)
+	camion.cargar(knightRider)
+	
+	assert.equals(50,camion.cargaDisponible())
+}
+
+test "la motoneta puede cargar 20 ladrillos"{
+	paqueteDeLadrillos.cantidadLadrillos(20)
+	motoneta.puedeCargar(paqueteDeLadrillos)
+	assert.that(motoneta.puedeCargar(paqueteDeLadrillos))
+}
+
+test "la empresa carga cosas en el depostio y despues la carga en el camion"{
+	paqueteDeLadrillos.cantidadLadrillos(20)
+	laEmpresa.cargarDepositoConCosas(bumblebee)
+	//laEmpresa.cargar()
+	camion.capacidadMaxima(550)
+	
+	assert.that(camion.tieneCargado(bumblebee))
+	
+}

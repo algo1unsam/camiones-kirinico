@@ -1,0 +1,198 @@
+//Nicolas A. Dorado Soria.
+
+
+object laEmpresa {
+
+	var deposito = []
+	var property transporte = camion
+
+	method cargarDepositoConCosas(algo) {
+		deposito.addAll(algo)
+	}
+
+
+	method descargarDeposito(algo) {
+		deposito.remove(algo)
+	}
+	method cargar() {
+		deposito.forEach{ carga => 
+			 if (transporte.puedeCargar(carga)) 
+			 	transporte.cargar(carga)
+			self.descargarDeposito(carga)
+		}
+	}
+
+}
+
+object camion {
+
+	var carga = []
+	var property capacidadMaxima = 15
+
+	method cargar(algo) {
+		if (self.puedeCargar(algo)) {
+			carga.add(algo)
+		}
+	}
+
+	method descargar(algo) {
+		carga.remove(algo)
+	}
+
+	method tieneCargado(algo) {
+		return carga.contains(algo)
+	}
+
+	method pesoTotal() {
+		return carga.sum({ cargas => cargas.peso() })
+	}
+
+	method cargaDisponible() {
+		return capacidadMaxima - self.pesoTotal()
+	}
+
+	method puedeCargar(algo) {
+		return self.cargaDisponible() > algo.peso()
+	}
+
+	method cargaMasPeligrosa() {
+		return carga.max({ cargas => cargas.nivelPeligrosidad() })
+	}
+
+	method saberSiPuedePorRuta() {
+		return ruta.peligrosidadRuta() > self.cargaMasPeligrosa().nivelPeligrosidad()
+	}
+
+}
+
+object motoneta {
+
+	var property capacidadMaxima = 100
+	var carga = []
+
+	method cargar(algo) {
+		if (self.puedeCargar(algo)) {
+			carga.add(algo)
+		}
+	}
+
+	method puedeCargar(algo) {
+		return algo.peso() < 100
+	}
+
+}
+
+object ruta {
+
+	var property peligrosidadRuta = 15
+
+}
+
+object robot {
+
+	const peligrosidadRobot = 30
+
+	method peligrosidad() {
+		return peligrosidadRobot
+	}
+
+}
+
+object auto {
+
+	const peligrosidadAuto = 15
+
+	method peligrosidad() {
+		return peligrosidadAuto
+	}
+
+}
+
+object contenedor {
+
+	var carga = []
+
+	method cargar(algo) {
+		carga.add(algo)
+	}
+
+	method peso() {
+		return 100 + carga.sum({ cargas => cargas.peso() })
+	}
+
+	method nivelPeligrosidad() {
+		if (carga == []) return 0 else return carga.max({ cargas => cargas.nivelPeligrosidad() })
+	}
+
+}
+
+object embalaje {
+
+	var carga = []
+
+	method cargar(algo) {
+		carga.add(algo)
+	}
+
+	method peso() {
+		return carga.sum({ cargas => cargas.peso() })
+	}
+
+	method nivelPeligrosidad() {
+		return carga.max({ cargas => cargas.nivelPeligrosidad() }) / 2
+	}
+
+}
+
+object knightRider {
+
+	const pesoKnightRider = 500
+	const peligrosidadKnightRider = 10
+
+	method peso() {
+		return pesoKnightRider
+	}
+
+	method nivelPeligrosidad() {
+		return peligrosidadKnightRider
+	}
+
+}
+
+object bumblebee {
+
+	const pesoBumblebee = 800
+	const peligrosidadBumblebee = 0
+	var property transformacionDeBumblebee = robot
+
+	method peso() {
+		return pesoBumblebee
+	}
+
+	method nivelPeligrosidad() {
+		return transformacionDeBumblebee.peligrosidad()
+	}
+
+	method transformarEn(algo) {
+		transformacionDeBumblebee = algo
+	}
+
+}
+
+object paqueteDeLadrillos {
+
+	const pesoLadrillo = 2
+	var property cantidadLadrillos = 2
+	const peligrosidadLadrillos = 2
+
+	method peso() {
+		return pesoLadrillo * self.cantidadLadrillos()
+	}
+
+	method nivelPeligrosidad() {
+		return peligrosidadLadrillos
+	}
+
+}
+
+
