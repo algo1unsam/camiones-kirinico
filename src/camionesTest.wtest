@@ -1,5 +1,7 @@
 //Nicolas A. Dorado Soria.
 
+// TODO EXCELENTES TESTS
+
 import camiones.*
 test "el peso del camion es 510" {
 	paqueteDeLadrillos.cantidadLadrillos(5)

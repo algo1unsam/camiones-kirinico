@@ -1,4 +1,5 @@
 //Nicolas A. Dorado Soria.
+// TODO Nicooooooo, separame en archivos!
 
 
 object laEmpresa {
@@ -6,18 +7,25 @@ object laEmpresa {
 	var deposito = []
 	var property transporte = camion
 
+	// TODO por el addAll, algo debería ser una coleccion
+	// de ser así (lo cuál es correctísimo), debería tener un nombre acorde!
 	method cargarDepositoConCosas(algo) {
 		deposito.addAll(algo)
 	}
 
-
 	method descargarDeposito(algo) {
 		deposito.remove(algo)
 	}
+	
+	// TODO como resolves el caso de la motoneta?
+	// me parece que lo mejor sería que el transporte a cargar venga por parámetro
+	// así podes mandar uno, o el otro
 	method cargar() {
 		deposito.forEach{ carga => 
 			 if (transporte.puedeCargar(carga)) 
 			 	transporte.cargar(carga)
+			// TODO esto debería estar ADENTRO del test, sino hace esto SIEMPRE
+			// y sólo debería descargar en el caso de que se pudo cargar en el transporte
 			self.descargarDeposito(carga)
 		}
 	}
@@ -110,6 +118,8 @@ object auto {
 
 object contenedor {
 
+	// TODO nico OJO con los nombres
+	// si es una colección, debería llamarse cargas, en lugar de carga
 	var carga = []
 
 	method cargar(algo) {
@@ -127,7 +137,10 @@ object contenedor {
 }
 
 object embalaje {
-
+	
+	// TODO acá NO es una lista sino que el embalaje embala una sola cosa
+	// el enunciado dice:
+	// Es una cobertura que envuelve a cualquier otra *cosa*. El peso es el peso de *la cosa* que tenga adentro.
 	var carga = []
 
 	method cargar(algo) {
